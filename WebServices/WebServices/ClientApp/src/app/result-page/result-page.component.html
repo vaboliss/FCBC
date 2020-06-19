@@ -1,0 +1,71 @@
+<h3>{{response.result.status.toUpperCase()}}</h3>
+
+<h4>Path: {{response.result.Kelias}}</h4>
+<h4>Goal: {{response.information.goal}}</h4>
+<table class="table col-md-6">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Goal</th>
+      <th scope="col">Value</th>
+    <tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{response.information.goal}}</td>
+      <td>{{goalValue}}</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Facts: </h4>
+<table class="table col-md-6">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Value</th>
+    <tr>
+    </thead>
+  <tbody>
+    <tr *ngFor="let fact of response.information.factsValues">
+    <td>{{fact.fact}}</td>
+    <td>{{fact.factValue}}</td>
+    </tr>
+ </tbody>
+ </table>
+<h4>Rules: </h4>
+<table class="table col-md-6">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Rule Number</th>
+      <th scope="col">Rule Left Side</th>
+      <th scope="col">&#8592;</th>
+      <th scope="col">Rule Right Side</th>
+      <th scope="col">Rule URL</th>
+    <tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rule of response.information.rules">
+      <td>{{rule.RuleNo}}</td>
+      <td>{{rule.LeftSide}}</td>
+      <td>&#8592;</td>
+      <td>{{rule.RightSide}}</td>
+      <td>{{rule.RuleURL}}</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Protocol: </h3>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Information</th>
+      <th scope="col">Goal</th>
+      <th scope="col">New Goal</th>
+    <tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let protocol of response.protocol">
+      <td>{{protocol.information}}</td>
+      <td>{{protocol.goal}}</td>
+      <td>{{protocol.newGoals}}</td>
+    </tr>
+  </tbody>
+</table>

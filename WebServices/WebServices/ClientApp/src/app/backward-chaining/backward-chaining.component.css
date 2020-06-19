@@ -1,0 +1,11 @@
+.header-row{
+    border-bottom: solid 1px;
+}
+.procedure-row {
+  border-bottom: solid 1px;
+  padding-top: 10px;
+}
+.center-button {
+  display: block;
+  margin: 0 auto;
+}

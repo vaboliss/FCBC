@@ -1,0 +1,168 @@
+<div class="alert alert-danger mt-2" *ngIf="notification">
+  {{notificationMessage}}
+</div>
+<h3>Backward Chaining algorithm</h3>
+<h5>Rules: </h5>
+<div class="row header-row">
+  <div class="col-lg-1 col-md-2">
+    <label>Number</label>
+  </div>
+  <div class="col-lg-2 col-md-2">
+    <label>Procedure Output</label>
+  </div>
+  <div class="col-lg-1 col-md-1">
+  </div>
+  <div class="col-lg-2 col-md-2">
+    <label>Procedure Input</label>
+  </div>
+  <div class="col-lg-5 col-md-4">
+    <label>Procedure URL To API</label>
+  </div>
+  <div class="col-lg-1 col-md-1">
+    <label>Action</label>
+  </div>
+</div>
+<div class="row procedure-row" *ngFor="let rule of clientInput.rules">
+  <div class="col-lg-1 col-md-2  text-break">
+    {{rule.RuleNo}}
+  </div>
+  <div class="col-lg-2 col-md-2  text-break">
+    {{rule.LeftSide}}
+  </div>
+  <div class="col-lg-1 col-md-1">
+    <h4>&lt;-</h4>
+  </div>
+  <div class="col-lg-2 col-md-2 text-break">
+    {{getRightSide(rule.RightSide)}}
+  </div>
+  <div class="col-lg-5 col-md-4 text-break">
+    {{rule.RuleUrl}}
+  </div>
+  <div class="col-lg-1 col-md-1">
+    <button class="btn btn-danger mb-2" (click)="DeleteButtonPressed(rule)">Delete</button>
+  </div>
+</div>
+<div class="row" *ngIf="Add">
+  <div class="col-lg-1 col-md-2">
+  </div>
+  <div class="col-lg-2 col-md-2">
+    <input type="text" [(ngModel)]="ProcedureOutput" class="form-control" placeholder="Procedure Output">
+    <span *ngIf="!validationResult.IsRulesLeftSideValid" class="validation-error">
+      Procedure Output is mandatory
+    </span>
+  </div>
+  <div class="col-lg-1 col-md-1">
+    <h4>&lt;-</h4>
+  </div>
+  <div class="col-lg-2 col-md-2">
+    <input type="text" [(ngModel)]="ProcedureInput" class="form-control" placeholder="Procedure Input">
+    <span *ngIf="!validationResult.IsRulesRightSideValid" class="validation-error">
+      Procedure Input is mandatory
+    </span>
+  </div>
+  <div class="col-lg-5 col-md-4">
+    <input type="text" [(ngModel)]="RuleUrl" class="form-control" placeholder="Procedure API URL">
+    <span *ngIf="!validationResult.IsRulesURLValid" class="validation-error">
+      Rule URL is mandatory
+    </span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <button class="btn btn-info mt-2 mr-3" *ngIf="!Add" (click)="AddProcedureButtonPressed()">Add procedure</button>
+    <button class="btn btn-info mt-2 mr-3" *ngIf="Add" [disabled]="!validationResult.IsRulesValid" (click)="AddButtonPressed()">Add</button>
+    <button *ngIf="Add" class="btn btn-secondary mt-2" (click)="CancelButtonPressed()">Cancel</button>
+  </div>
+</div>
+
+<h5>Facts:</h5>
+<div class="row mt-4">
+  <div class="col-sm-2">
+    <label>Fact Name</label>
+  </div>
+  <div class="col-sm-1">
+    =
+  </div>
+  <div class="col-sm-2">
+    Type
+  </div>
+  <div class="col-sm-4">
+    <label>Fact value</label>
+  </div>
+</div>
+<div class="row  col-md-10 procedure-row" *ngFor="let fact of clientInput.factsValues">
+  <div class="col-sm-2  text-break">
+    {{fact.fact}}
+  </div>
+  <div class="col-sm-1">
+    =
+  </div>
+  <div class="col-sm-2 form-group">
+    <select class="form-control" disabled>
+      <option>{{fact.type}}</option>
+    </select>
+  </div>
+  <div class="col-sm-4  text-break">
+    {{fact.factValue}}
+  </div>
+
+  <div class="col-md-1">
+    <button class="btn btn-danger mb-2" (click)="DeleteFactButtonPressed(fact)">Delete</button>
+  </div>
+</div>
+<div class="row " *ngIf="AddFact">
+  <div class="col-sm-2 form-group">
+    <input type="text" [(ngModel)]="factName" class="form-control" placeholder="Facts">
+    <span *ngIf="!validationResult.IsFactValid" class="validation-error">
+      Fact is mandatory
+    </span>
+  </div>
+  <div class="col-sm-1">
+    =
+  </div>
+  <div class="col-sm-2 form-group">
+    <select [(ngModel)]="factType" class="form-control">
+      <option value="String">String</option>
+      <option value="Integer">Integer</option>
+    </select>
+    <span *ngIf="!validationResult.IsFactTypeValid" class="validation-error">
+      Fact type is mandatory
+    </span>
+  </div>
+  <div class="col-sm-4 form-group">
+    <input type="text" [(ngModel)]="factValue" class="form-control" placeholder="Facts">
+    <span *ngIf="!validationResult.IsFactValueValid" class="validation-error">
+      Fact Value is mandatory
+    </span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-5 text-center">
+    <button class="btn btn-info mt-2 mr-3" *ngIf="!AddFact" (click)="FirstAddFactButtonPressed()">Add Fact</button>
+    <button class="btn btn-info mt-2 mr-3" *ngIf="AddFact" [disabled]="!validationResult.IsFactsValid" (click)="AddFactButtonPressed()">Add</button>
+    <button class="btn btn-secondary mt-2" *ngIf="AddFact" (click)="CancelFactButtonPressed()">Cancel</button>
+  </div>
+</div>
+
+<div class="row  mt-4">
+  <div class="col-sm-6">
+    <h5>Goal:</h5>
+    <input type="text" [(ngModel)]="clientInput.goal" class="form-control" placeholder="Goal">
+    <span *ngIf="!validationResult.IsGoalValid" class="validation-error">
+      Goal is mandatory
+    </span>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-sm-12 text-center">
+    <button class="btn btn-warning mt-2 mr-3" [disabled]="!validationResult.IsValid" (click)="BackwardChaining()">Backward Chaining</button>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-sm-12 text-center">
+    <button class="btn btn-info mt-2 mr-3" (click)="TransferToForward()">Transfer To Forward Chaining</button>
+  </div>
+</div>
